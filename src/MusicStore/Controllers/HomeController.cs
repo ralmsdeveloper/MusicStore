@@ -5,21 +5,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using MusicStore.Extensions;
 using MusicStore.Models;
 using Microsoft.Extensions.Options;
-using MusicStore.Extensions;
-
 
 namespace MusicStore.Controllers
 {
     public class HomeController : Controller
     {
-
-        private IOptions<AppSettings> AppSettings;
+        private AppSettings _appSettings;
 
         public HomeController(IOptions<AppSettings> appSettings)
         {
-            AppSettings = appSettings; 
+            _appSettings = appSettings.Value; 
         }
         
         //
@@ -31,7 +29,7 @@ namespace MusicStore.Controllers
             // Get most popular albums
             var cacheKey = "topselling";
             List<Album> albums;
-            if (!cache.TryGetValueExt(cacheKey, out albums, AppSettings.Value.CacheTimeout))
+            if (!cache.TryGetValueExt(cacheKey, out albums, _appSettings.CacheTimeoutSeconds))
             {
                 albums = await GetTopSellingAlbumsAsync(dbContext, 6);
 
@@ -43,9 +41,9 @@ namespace MusicStore.Controllers
                         cacheKey,
                         albums,
                         new MemoryCacheEntryOptions()
-                            .SetAbsoluteExpiration(TimeSpan.FromSeconds(AppSettings.Value.CacheTimeout > 0 ? AppSettings.Value.CacheTimeout : 1))
+                            .SetAbsoluteExpiration(TimeSpan.FromSeconds(_appSettings.CacheTimeoutSeconds > 0 ? _appSettings.CacheTimeoutSeconds : 1))
                             .SetPriority(CacheItemPriority.High),
-                        AppSettings.Value.CacheTimeout);
+                        _appSettings.CacheTimeoutSeconds);
                 }
             }
 

@@ -29,7 +29,7 @@ namespace MusicStore.Controllers
             services.Configure<AppSettings>(appSettings =>
             {
                 appSettings.SiteTitle = "Site Title";
-                appSettings.CacheTimeout = 600;
+                appSettings.CacheTimeoutSeconds = 600;
             });
 
             _serviceProvider = services.BuildServiceProvider();

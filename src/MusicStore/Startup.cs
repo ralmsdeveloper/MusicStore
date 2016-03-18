@@ -34,7 +34,7 @@ namespace MusicStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-            System.Console.WriteLine("Cache Timeout Setting:  " + Configuration["AppSettings:CacheTimeout"]);
+            System.Console.WriteLine("Cache Timeout Setting:  " + Configuration["AppSettings:CacheTimeoutSeconds"]);
 
             var useInMemoryStore = !_platform.IsRunningOnWindows
                 || _platform.IsRunningOnMono
@@ -97,7 +97,7 @@ namespace MusicStore
         //The allowed values are Development,Staging and Production
         public void ConfigureDevelopment(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
-            //loggerFactory.AddConsole(minLevel: LogLevel.Warning);
+            loggerFactory.AddConsole(minLevel: LogLevel.Warning);
 
             // StatusCode pages to gracefully handle status codes 400-599.
             app.UseStatusCodePagesWithRedirects("~/Home/StatusCodePage");
@@ -120,7 +120,7 @@ namespace MusicStore
         //The allowed values are Development,Staging and Production
         public void ConfigureStaging(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
-            //loggerFactory.AddConsole(minLevel: LogLevel.Warning);
+            loggerFactory.AddConsole(minLevel: LogLevel.Warning);
 
             // StatusCode pages to gracefully handle status codes 400-599.
             app.UseStatusCodePagesWithRedirects("~/Home/StatusCodePage");
@@ -134,7 +134,7 @@ namespace MusicStore
         //The allowed values are Development,Staging and Production
         public void ConfigureProduction(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
-            //loggerFactory.AddConsole(minLevel: LogLevel.Warning);
+            loggerFactory.AddConsole(minLevel: LogLevel.Warning);
 
             // StatusCode pages to gracefully handle status codes 400-599.
             app.UseStatusCodePagesWithRedirects("~/Home/StatusCodePage");
