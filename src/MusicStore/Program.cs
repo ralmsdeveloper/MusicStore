@@ -8,7 +8,7 @@ namespace MusicStore
         {
             var host = new WebHostBuilder()
                 .UseDefaultConfiguration(args)
-                .UseIISPlatformHandlerUrl()
+                .UseIIS()
                 .UseStartup("MusicStore")
                 .Build();
 

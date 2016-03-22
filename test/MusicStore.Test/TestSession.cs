@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+// This needs to be changed to using Microsoft.AspNetCore.Http; when we update our packages on MyGet.
+using Microsoft.AspNetCore.Http.Features;
 
 namespace MusicStore.Controllers
 {
