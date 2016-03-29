@@ -45,7 +45,7 @@ namespace MusicStore.Controllers
         }
 
         public async Task<IActionResult> Details(
-            [FromServices] IMemoryCache cache,
+            [FromServices] ConfigurableMemoryCache cache,
             int id)
         {
             var cacheKey = string.Format("album_{0}", id);

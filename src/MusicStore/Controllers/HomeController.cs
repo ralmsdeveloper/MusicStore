@@ -15,7 +15,7 @@ namespace MusicStore.Controllers
         // GET: /Home/
         public async Task<IActionResult> Index(
             [FromServices] MusicStoreContext dbContext,
-            [FromServices] IMemoryCache cache)
+            [FromServices] ConfigurableMemoryCache cache)
         {
             // Get most popular albums
             var cacheKey = "topselling";

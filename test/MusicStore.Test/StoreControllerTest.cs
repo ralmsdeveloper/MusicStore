@@ -20,8 +20,12 @@ namespace MusicStore.Controllers
             var efServiceProvider = new ServiceCollection().AddEntityFrameworkInMemoryDatabase().BuildServiceProvider();
 
             var services = new ServiceCollection();
-
             services.AddDbContext<MusicStoreContext>(b => b.UseInMemoryDatabase().UseInternalServiceProvider(efServiceProvider));
+            services.Configure<AppSettings>(appSettings =>
+            {
+                appSettings.StoreInCache = true;
+            });
+            services.AddSingleton<ConfigurableMemoryCache>();
 
             _serviceProvider = services.BuildServiceProvider();
         }
@@ -93,7 +97,7 @@ namespace MusicStore.Controllers
             var controller = new StoreController(_serviceProvider.GetRequiredService<MusicStoreContext>());
 
             // Act
-            var result = await controller.Details(_serviceProvider.GetRequiredService<IMemoryCache>(), albumId);
+            var result = await controller.Details(_serviceProvider.GetRequiredService<ConfigurableMemoryCache>(), albumId);
 
             // Assert
             Assert.IsType<NotFoundResult>(result);
@@ -108,7 +112,7 @@ namespace MusicStore.Controllers
             var dbContext = _serviceProvider.GetRequiredService<MusicStoreContext>();
             var genres = CreateTestGenres(numberOfGenres: 3, numberOfAlbums: 3, dbContext: dbContext);
 
-            var cache = _serviceProvider.GetRequiredService<IMemoryCache>();
+            var cache = _serviceProvider.GetRequiredService<ConfigurableMemoryCache>();
 
             var controller = new StoreController(dbContext);
 

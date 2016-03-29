@@ -39,7 +39,7 @@ namespace MusicStore.Areas.Admin.Controllers
         //
         // GET: /StoreManager/Details/5
         public async Task<IActionResult> Details(
-            [FromServices] IMemoryCache cache,
+            [FromServices] ConfigurableMemoryCache cache,
             int id)
         {
             var cacheKey = GetCacheKey(id);
@@ -86,7 +86,7 @@ namespace MusicStore.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
             Album album,
-            [FromServices] IMemoryCache cache,
+            [FromServices] ConfigurableMemoryCache cache,
             CancellationToken requestAborted)
         {
             if (ModelState.IsValid)
@@ -132,7 +132,7 @@ namespace MusicStore.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(
-            [FromServices] IMemoryCache cache,
+            [FromServices] ConfigurableMemoryCache cache,
             Album album,
             CancellationToken requestAborted)
         {
@@ -167,7 +167,7 @@ namespace MusicStore.Areas.Admin.Controllers
         // POST: /StoreManager/RemoveAlbum/5
         [HttpPost, ActionName("RemoveAlbum")]
         public async Task<IActionResult> RemoveAlbumConfirmed(
-            [FromServices] IMemoryCache cache,
+            [FromServices] ConfigurableMemoryCache cache,
             int id,
             CancellationToken requestAborted)
         {
