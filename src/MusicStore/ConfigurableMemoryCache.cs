@@ -16,7 +16,7 @@ namespace MusicStore
 
         public TItem Get<TItem>(object key)
         {
-            if (_appSettings.StoreInCache)
+            if (_appSettings.UseCache)
             {
                 return _memoryCache.Get<TItem>(key);
             }
@@ -26,7 +26,7 @@ namespace MusicStore
 
         public object Set<T>(object key, T value, MemoryCacheEntryOptions options)
         {
-            if (_appSettings.StoreInCache)
+            if (_appSettings.UseCache)
             {
                 return _memoryCache.Set(key, value, options);
             }
@@ -36,7 +36,7 @@ namespace MusicStore
 
         public bool TryGetValue<T>(object key, out T value)
         {
-            if (_appSettings.StoreInCache)
+            if (_appSettings.UseCache)
             {
                 return _memoryCache.TryGetValue(key, out value);
             }
@@ -47,7 +47,7 @@ namespace MusicStore
 
         public void Remove(object key)
         {
-            if (_appSettings.StoreInCache)
+            if (_appSettings.UseCache)
             {
                 _memoryCache.Remove(key);
             }

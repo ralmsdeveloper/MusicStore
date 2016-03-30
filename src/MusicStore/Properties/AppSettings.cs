@@ -4,6 +4,6 @@
     {
         public string SiteTitle { get; set; }
 
-        public bool StoreInCache { get; set; }
+        public bool UseCache { get; set; }
     }
 }

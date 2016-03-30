@@ -23,7 +23,7 @@ namespace MusicStore.Controllers
             services.AddDbContext<MusicStoreContext>(b => b.UseInMemoryDatabase().UseInternalServiceProvider(efServiceProvider));
             services.Configure<AppSettings>(appSettings =>
             {
-                appSettings.StoreInCache = true;
+                appSettings.UseCache = true;
             });
             services.AddSingleton<ConfigurableMemoryCache>();
 
