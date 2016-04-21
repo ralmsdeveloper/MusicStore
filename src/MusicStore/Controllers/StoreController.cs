@@ -24,9 +24,8 @@ namespace MusicStore.Controllers
         //
         // GET: /Store/
         public async Task<IActionResult> Index()
-        {
-            var genres = await DbContext.Genres.ToListAsync();
-
+        { 
+            var genres = await DbContext.Genres.Include(a=>a.Albums).ToListAsync(); 
             return View(genres);
         }
 

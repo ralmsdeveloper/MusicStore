@@ -10,6 +10,9 @@
 <ul class="list-group">
     @foreach (var genre in Model)
     {
-        <li class="list-group-item"><a asp-controller="Store" asp-action="Browse" asp-route-genre="@genre.Name">@genre.Name</a></li>
+        <li class="list-group-item">
+            <a asp-controller="Store" asp-action="Browse" asp-route-genre="@genre.Name">@genre.Name</a>
+            <span class="badge">@genre.Albums.Count</span>
+        </li>
     }
 </ul>
