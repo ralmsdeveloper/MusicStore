@@ -10,6 +10,8 @@ namespace MusicStore.Models
         public MusicStoreContext(DbContextOptions<MusicStoreContext> options)
             : base(options)
         {
+            // TODO: #639
+            //ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
         public DbSet<Album> Albums { get; set; }

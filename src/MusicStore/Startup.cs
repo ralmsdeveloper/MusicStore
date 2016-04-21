@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 using Microsoft.Extensions.PlatformAbstractions;
 using MusicStore.Components;
 using MusicStore.Models;
@@ -34,7 +35,6 @@ namespace MusicStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-
             var useInMemoryStore = !_platform.IsRunningOnWindows
                 || _platform.IsRunningOnMono
                 || _platform.IsRunningOnNanoServer;
@@ -43,12 +43,12 @@ namespace MusicStore
             if (useInMemoryStore)
             {
                 services.AddDbContext<MusicStoreContext>(options =>
-                            options.UseInMemoryDatabase());
+                    options.UseInMemoryDatabase());
             }
             else
             {
                 services.AddDbContext<MusicStoreContext>(options =>
-                            options.UseSqlServer(Configuration[StoreConfig.ConnectionStringKey.Replace("__",":")]));
+                    options.UseSqlServer(Configuration[StoreConfig.ConnectionStringKey.Replace("__", ":")]));
             }
 
             // Add Identity services to the services container
@@ -68,6 +68,8 @@ namespace MusicStore
                 });
             });
 
+            services.AddLogging();
+
             // Add MVC services to the services container
             services.AddMvc();
 
@@ -86,7 +88,8 @@ namespace MusicStore
             {
                 options.AddPolicy(
                     "ManageStore",
-                    authBuilder => {
+                    authBuilder =>
+                    {
                         authBuilder.RequireClaim("ManageStore", "Allowed");
                     });
             });
@@ -96,7 +99,7 @@ namespace MusicStore
         //The allowed values are Development,Staging and Production
         public void ConfigureDevelopment(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(minLevel: LogLevel.Warning);
+            loggerFactory.AddConsole(minLevel: LogLevel.Information);
 
             // StatusCode pages to gracefully handle status codes 400-599.
             app.UseStatusCodePagesWithRedirects("~/Home/StatusCodePage");
